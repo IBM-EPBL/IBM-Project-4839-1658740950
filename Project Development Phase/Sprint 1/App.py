@@ -11,9 +11,7 @@ def index():
 def about():
 	return render_template("about.html")
 
-@app.route("/retail")
-def retail():
-  return render_template('retail.html')
+
 
 @app.route('/signup',methods=["post","get"])
 def signup():
