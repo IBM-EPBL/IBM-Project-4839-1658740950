@@ -1,0 +1,108 @@
+{% extends 'base.html' %} {% block title %}
+<title>Inventory Managmnet App</title>
+{% endblock %} {% block content %}
+<main>
+  <div class="container-fluid">
+    <h1
+      class="mt-4"
+      style="
+        font-size: 30px;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 500;
+      "
+      >Dashboard</h1
+    >
+    <ol class="breadcrumb mb-4">
+      <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+      <li class="breadcrumb-item active">Locations</li>
+    </ol>
+    <div class="card mb-4">
+      <div
+        class="card-header"
+        style="
+          font-size: 20px;
+          font-family: 'Poppins', sans-serif;
+          font-weight: 500;
+        "
+        ><img
+          src="https://inventorymgmt.s3.jp-tok.cloud-object-storage.appdomain.cloud/product-placement.png"
+          style="width: 35px; height: 35px"
+        />Locations</div
+      >
+      <div class="card-body">
+        <div class="card mb-4">
+          <div class="card-header">New Location</div>
+          <div class="card-body">
+            <form action="/locations/" method="POST" id="location_form">
+              <label for="location_name" class="col-form-label"
+                >Location Name</label
+              >
+              <input type="text" name="location_name" id="location_name" />
+              <input
+                id="submitLocation"
+                value="Add Location"
+                class="btn btn-primary"
+              />
+            </form>
+          </div>
+        </div>
+        <div class="card mb-4">
+          <div class="card-header">
+            <img
+              src="https://inventorymgmt.s3.jp-tok.cloud-object-storage.appdomain.cloud/product-design.png"
+              style="width: 25px; height: 25px"
+            />
+            Locations Table
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              {% if locations|length < 1 %}
+              <h4>There are no Locations, add one above</h4>
+              {% else %}
+              <table
+                class="table table-bordered"
+                id="dataTable"
+                width="100%"
+                cellspacing="0"
+              >
+                <thead>
+                  <tr>
+                    <th>Location Name</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tfoot>
+                  <tr>
+                    <th>Location Name</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                  </tr>
+                </tfoot>
+                <tbody>
+                  {% for location in locations %}
+                  <tr>
+                    <td>{{ location.location_id }}</td>
+                    <td>{{ location.date_created.date() }}</td>
+                    <td>
+                      <a href="/delete-location/{{ location.location_id }}"
+                        >Delete</a
+                      >
+                      <br />
+                      <a href="/update-location/{{ location.location_id }}"
+                        >Update</a
+                      >
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}
